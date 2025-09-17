@@ -1,50 +1,50 @@
 name: README heartbeat
 on:
-  schedule:
-    - cron: "0 4 * * *"
-  workflow_dispatch:
-    inputs:
-      commits:
-        description: "How many commits to push this run"
-        required: false
-        default: "1"
-        type: string
+  schedule:
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+    inputs:
+      commits:
+        description: "How many commits to push this run"
+        required: false
+        default: "1"
+        type: string
 
 permissions:
-  contents: write
+ contents: write
 
 jobs:
-  run:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: true
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8.0.x"
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
 
-      - name: Build tool
-        run: dotnet build ReadmeCron/ReadmeCron.csproj -c Release
-      - name: Configure git identity
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Build tool
+        run: dotnet build ReadmeCron/ReadmeCron.csproj -c Release
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
   
-      # We modify the README once per commit we want, then commit each change.
-      - name: Apply updates and create N commits
-        env:
-          COMMITS: ${{ inputs.commits || '1' }}
-        run: |
-          COUNT=${COMMITS}
-          for i in $(seq 1 $COUNT); do
-            dotnet run --project ReadmeCron -- --commits 1 --file README.md
-            git add README.md
-            git commit -m "chore: README heartbeat ($i/$COUNT) [skip ci]"
-          done
+      # We modify the README once per commit we want, then commit each change.
+      - name: Apply updates and create N commits
+        env:
+          COMMITS: ${{ inputs.commits || '1' }}
+        run: |
+          COUNT=${COMMITS}
+          for i in $(seq 1 $COUNT); do
+            dotnet run --project ReadmeCron -- --commits 1 --file README.md
+            git add README.md
+            git commit -m "chore: README heartbeat ($i/$COUNT) [skip ci]"
+          done
 
-      - name: Push
-        run: git push origin HEAD
+      - name: Push
+        run: git push origin HEAD
