@@ -1,0 +1,10 @@
+bin/
+obj/
+*.dll
+*.pdb
+*.cache
+*.json
+*.editorconfig
+*.nuget.g.props
+*.csproj.FileListAbsolute.txt
+apphost
