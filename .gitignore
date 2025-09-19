@@ -1,10 +1,10 @@
-bin/
-obj/
+ReadmeCron/bin/
+ReadmeCron/obj/
 *.dll
 *.pdb
 *.cache
 *.json
 *.editorconfig
-*.nuget.g.props
+*.nuget.*
 *.csproj.FileListAbsolute.txt
 apphost
