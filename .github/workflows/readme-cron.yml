@@ -42,9 +42,7 @@ jobs:
           for i in $(seq 1 $COUNT); do
             dotnet run --project ReadmeCron -- --commits 1 --file README.md
             git add README.md
-            git commit -m "chore: README heartbeat ($i/$COUNT) [skip ci]"
-
-            git commit --author="Lucian Popa <lucianpopa98@yahoo.com>" -m "chore: README heartbeat ($i/$COUNT)"
+            git commit --author="Lucian Popa <lucianpopa98@yahoo.com>" -m "README heartbeat ($i/$COUNT)"
 
           done
 
