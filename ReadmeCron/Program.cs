@@ -36,7 +36,7 @@ if (!File.Exists(file))
 
 for (int i = 0; i < commits; i++)
 {
-    var stamp = $"Heartbeat: {DateTime.UtcNow:dd-MM-yyyy HH:mm:ss}UTC #{i} ({Guid.NewGuid().ToString()[..8]})";
+    var stamp = $"Heartbeat: {DateTime.UtcNow:dd-MM-yyyy HH:mm:ss}UTC #{i+1} ({Guid.NewGuid().ToString()[..8]})";
     var heartbeatLine = $"{marker} {stamp}";
     var lines = File.ReadAllLines(file).ToList();
     var idx = lines.FindIndex(l => l.Contains(marker));
