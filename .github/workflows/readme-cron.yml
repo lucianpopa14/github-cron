@@ -47,4 +47,4 @@ jobs:
           done
 
       - name: Push
-        run: git push -f
+        run: git push origin main
