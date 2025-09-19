@@ -49,4 +49,4 @@ jobs:
           done
 
       - name: Push
-        run: git push origin HEAD
+        run: git push -f
