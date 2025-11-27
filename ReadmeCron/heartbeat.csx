@@ -1,25 +1,27 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
+using System.Threading;
 
 int commits = 1;
 string file = "README.md";
 bool dryRun = false;
 const string marker = "<!-- HEARTBEAT -->";
 
-for (int i = 0; i < args.Length; i++)
+for (int i = 0; i < Args.Count; i++)
 {
-    switch (args[i])
+    switch (Args[i])
     {
         case "--commits":
-            if (i + 1 < args.Length && int.TryParse(args[i + 1], out var c))
+            if (i + 1 < Args.Count && int.TryParse(Args[i + 1], out var c))
             {
                 commits = Math.Max(1, c);
                 i++;
             }
             break;
         case "--file":
-            if (i + 1 < args.Length)
+            if (i + 1 < Args.Count)
             {
-                file = args[i + 1];
+                file = Args[i + 1];
                 i++;
             }
             break;
@@ -28,6 +30,7 @@ for (int i = 0; i < args.Length; i++)
             break;
     }
 }
+
 if (!File.Exists(file))
 {
     Console.WriteLine($"File '{file}' not found. Creating it.");

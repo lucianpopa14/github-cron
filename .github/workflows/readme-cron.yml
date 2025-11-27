@@ -22,13 +22,14 @@ jobs:
         with:
           persist-credentials: true
 
-      - name: Setup .NET
+      - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "10.0.x"
 
-      - name: Build tool
-        run: dotnet build ReadmeCron/ReadmeCron.csproj -c Release
+      - name: Install dotnet-script tool
+        run: dotnet tool install -g dotnet-script
+
       - name: Configure git identity
         run: |
           git config user.name "github-actions[bot]"
@@ -40,7 +41,7 @@ jobs:
         run: |
           COUNT=${COMMITS}
           for i in $(seq 1 $COUNT); do
-            dotnet run --project ReadmeCron -- --commits 1 --file README.md
+            dotnet-script ReadmeCron/heartbeat.csx --commits 1 --file README.md
             git add README.md
             git commit --author="Lucian Popa <lucianpopa98@yahoo.com>" -m "README heartbeat ($i/$COUNT)"
 
